@@ -150,7 +150,7 @@ extension MusicViewController: UITableViewDelegate, UITableViewDataSource {
 extension MusicViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: {[weak self] (_) in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: {[weak self] (_) in
             guard let text = searchBar.text else { return }
             self?.interactor?.makeRequest(request: Music.Model.Request.RequestType.getTracks(searchText: text))
         })

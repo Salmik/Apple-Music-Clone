@@ -129,25 +129,55 @@ class TrackDetailView: UIView {
     private func setupGesture() {
         miniTackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapMaximized)))
         
-//        miniTackView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan(gesture:))))
+        miniTackView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan(gesture:))))
     }
     
     @objc private func handleTapMaximized() {
         self.tabBarDelegate?.maximizeTrackDetail(viewModel: nil)
     }
     
-//    @objc private func handlePan(gesture: UIPanGestureRecognizer) {
-//        switch gesture.state {
-//        case .began:
-//            print("")
-//        case .changed:
-//            print("")
-//        case .ended:
-//            print("")
-//        @unknown default:
-//            print("")
-//        }
-//    }
+    @objc private func handlePan(gesture: UIPanGestureRecognizer) {
+        switch gesture.state {
+        case .began:
+            print("began")
+        case .changed:
+            handlePanChanged(gesture: gesture)
+        case .ended:
+            handlePanEnded(gesture: gesture)
+        @unknown default:
+            print("")
+        }
+    }
+    
+    private func handlePanChanged(gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: self.superview)
+        self.transform = CGAffineTransform(translationX: 0, y: translation.y)
+        
+        let newAlpha = 1 + translation.y / 200
+        self.miniTackView.alpha = newAlpha < 0 ? 0 : newAlpha
+        self.maximizedStackView.alpha = -translation.y / 200
+    }
+    
+    private func handlePanEnded(gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: self.superview)
+        let velocity = gesture.velocity(in: self.superview)
+        
+        UIView.animate(withDuration: 0.5,
+                       delay: 0,
+                       usingSpringWithDamping: 0.7,
+                       initialSpringVelocity: 1,
+                       options: .curveEaseOut,
+                       animations: {
+                        self.transform = .identity
+                        if translation.y < -200 || velocity.y < -500 {
+                            self.tabBarDelegate?.maximizeTrackDetail(viewModel: nil)
+                        } else {
+                            self.miniTackView.alpha = 1
+                            self.maximizedStackView.alpha = 0
+                        }
+                       },
+                       completion: nil)
+    }
     
     // MARK:- PLay track func
     private func playTrack(preview: String?) {
