@@ -179,6 +179,7 @@ class TrackDetailView: UIView {
                        completion: nil)
     }
     
+    
     // MARK:- PLay track func
     private func playTrack(preview: String?) {
         
