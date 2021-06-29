@@ -2,11 +2,20 @@
 
 **Simple apple music app clone**
 
-## Installation
+<img width="290px" src="https://user-images.githubusercontent.com/5484111/123752132-5aa27b00-d8da-11eb-8c00-04a0dcef3537.jpeg" /></a>
+<img width="290px" src="https://user-images.githubusercontent.com/5484111/123752114-58402100-d8da-11eb-9e53-211a420a7137.jpeg" /></a>
 
+
+## How to run a demo app
+
+1) Download the source code by cloning this repository<br/>
+2) Install the pods by running
 ```
-run - pod install
+run - pod update
 ```
+3) Open the xcworkspace file with the latest version of Xcode
+
+
 
 ## Technologies
 SDWebImage - [SDWebImage](https://github.com/SDWebImage/SDWebImage)<br/>
